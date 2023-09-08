@@ -195,8 +195,6 @@ in  upstream
         ]
         "https://github.com/CarstenKoenig/purescript-errors.git"
         "edfd8b1a285920e725a7fec32e736c5d59561772"
-  with cardano-multiplatform-lib = ../purescript-cardano-multiplatform-lib/spago.dhall as Location
-{-
   with cardano-multiplatform-lib =
       mkPackage
         [ "argonaut"
@@ -227,4 +225,3 @@ in  upstream
         ]
         "https://github.com/input-output-hk/purescript-cardano-multiplatform-lib.git"
         "main"
-        -}

@@ -1,4 +1,4 @@
-{ name = "my-project"
+{ name = "cardano-wallet-client"
 , dependencies =
   [ "aff"
   , "arrays"
