@@ -131,86 +131,6 @@ in  upstream
         ]
         "https://github.com/paluh/purescript-atleast.git"
         "main"
-  with polyform =
-      mkPackage
-        [ "js-unsafe-stringify"
-        , "newtype"
-        , "ordered-collections"
-        , "variant"
-        , "profunctor"
-        , "invariant"
-        , "foreign-object"
-        , "run"
-        , "transformers"
-        , "validation"
-        , "foreign"
-        ]
-        "https://github.com/purescript-polyform/polyform.git"
-        "v0.9.2"
-  with
-    -- react-bootstrap = ../purescript-react-bootstrap/spago.dhall as Location
-    react-bootstrap = mkPackage
-      [ "aff", "arrays", "atleast", "bifunctors", "console", "control"
-      , "convertable-options", "datetime", "datetime-iso", "debug", "decimals"
-      , "effect", "either", "enums", "foldable-traversable", "formatters"
-      , "functors", "halogen-subscriptions", "identity", "integers"
-      , "js-timers", "maybe", "newtype", "nullable", "ordered-collections"
-      , "parsing", "polyform", "polyform-batteries-core"
-      , "polyform-batteries-urlencoded", "prelude", "profunctor", "random"
-      , "react-basic", "react-basic-dom", "react-basic-hooks", "record", "refs"
-      , "safe-coerce", "strings", "tailrec", "transformers", "tuples"
-      , "typelevel-prelude", "undefined-is-not-a-problem", "unsafe-coerce"
-      , "validation", "web-html"
-      ]
-      "https://github.com/paluh/purescript-react-bootstrap.git"
-      "39c055d3a3d4fadca6afba31326fdf27d315aec8"
-  with react-basic-hooks =
-      mkPackage
-        [ "aff"
-        , "aff-promise"
-        , "bifunctors"
-        , "console"
-        , "control"
-        , "datetime"
-        , "effect"
-        , "either"
-        , "exceptions"
-        , "foldable-traversable"
-        , "functions"
-        , "indexed-monad"
-        , "integers"
-        , "maybe"
-        , "newtype"
-        , "now"
-        , "nullable"
-        , "ordered-collections"
-        , "prelude"
-        , "react-basic"
-        , "refs"
-        , "tuples"
-        , "type-equality"
-        , "unsafe-coerce"
-        , "unsafe-reference"
-        , "web-html"
-        ]
-        "https://github.com/purescript-react/purescript-react-basic-hooks.git"
-        "v8.2.0"
-  with
-    react-bootstrap = mkPackage
-      [ "aff", "arrays", "atleast", "bifunctors", "console", "control"
-      , "convertable-options", "datetime", "datetime-iso", "debug", "decimals"
-      , "effect", "either", "enums", "foldable-traversable", "formatters"
-      , "functors", "halogen-subscriptions", "identity", "integers"
-      , "js-timers", "maybe", "newtype", "nullable", "ordered-collections"
-      , "parsing", "polyform", "polyform-batteries-core"
-      , "polyform-batteries-urlencoded", "prelude", "profunctor", "random"
-      , "react-basic", "react-basic-dom", "react-basic-hooks", "record", "refs"
-      , "safe-coerce", "strings", "tailrec", "transformers", "tuples"
-      , "typelevel-prelude", "undefined-is-not-a-problem", "unsafe-coerce"
-      , "validation", "web-html"
-      ]
-      "https://github.com/paluh/purescript-react-bootstrap.git"
-      "39c055d3a3d4fadca6afba31326fdf27d315aec8"
   with datetime-iso =
       mkPackage
         [ "aff"
@@ -242,18 +162,6 @@ in  upstream
       ]
       "https://github.com/paluh/purescript-foreign-generic.git"
       "a5c23d29e72619624978446293ac9bb45ccd2fde"
-  -- Isomers
-  with isomers = ../isomers/spago.dhall as Location
-  with http-types =
-      mkPackage
-        [ "tuples", "unicode" ]
-        "https://github.com/Woody88/purescript-http-types.git"
-        "3bcbf8b63d6ffce66356186519365cbf38697eb2"
-  with polyform-batteries-core = ../batteries-core/spago.dhall as Location
-  with polyform-batteries-env = ../batteries-env/spago.dhall as Location
-  with polyform-batteries-json = ../batteries-json/spago.dhall as Location
-  with polyform-batteries-urlencoded =
-      ../batteries-urlencoded/spago.dhall as Location
   with record-prefix =
       mkPackage
         [ "assert"
@@ -280,8 +188,6 @@ in  upstream
         "https://github.com/robertdp/purescript-web-router"
         "v0.3.0"
   with
-    simple-csv = ../purescript-simple-csv/spago.dhall as Location
-  with
     errors =
       mkPackage
         [ "control", "effect", "either", "maybe", "prelude"
@@ -289,3 +195,36 @@ in  upstream
         ]
         "https://github.com/CarstenKoenig/purescript-errors.git"
         "edfd8b1a285920e725a7fec32e736c5d59561772"
+  with cardano-multiplatform-lib = ../purescript-cardano-multiplatform-lib/spago.dhall as Location
+{-
+  with cardano-multiplatform-lib =
+      mkPackage
+        [ "argonaut"
+        , "arraybuffer-types"
+        , "arrays"
+        , "debug"
+        , "effect"
+        , "either"
+        , "exceptions"
+        , "foldable-traversable"
+        , "js-object"
+        , "js-promise-aff"
+        , "lists"
+        , "marlowe"
+        , "maybe"
+        , "newtype"
+        , "nullable"
+        , "ordered-collections"
+        , "partial"
+        , "prelude"
+        , "refs"
+        , "strings"
+        , "transformers"
+        , "tuples"
+        , "typelevel-prelude"
+        , "undefined-is-not-a-problem"
+        , "web-encoding"
+        ]
+        "https://github.com/input-output-hk/purescript-cardano-multiplatform-lib.git"
+        "main"
+        -}
