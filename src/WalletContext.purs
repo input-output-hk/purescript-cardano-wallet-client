@@ -16,7 +16,6 @@ import Data.Maybe (Maybe(..))
 import Data.Newtype (class Newtype)
 import Data.Traversable (for)
 import Data.Undefined.NoProblem as NoProblem
-import Debug (traceM)
 import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
 import Wallet (fromSomeAddress)
@@ -24,7 +23,6 @@ import Wallet as Wallet
 
 newtype WalletContext = WalletContext
   { balance :: C.Value
-  -- Map.Map String (Map.Map String BigInt.Argonaut.BigInt)
   , changeAddress :: Bech32
   , usedAddresses :: Array Bech32
   }
@@ -32,7 +30,6 @@ newtype WalletContext = WalletContext
 derive instance Newtype WalletContext _
 derive newtype instance Show WalletContext
 derive newtype instance Eq WalletContext
--- derive newtype instance Ord WalletContext
 
 walletBalance :: CardanoMultiplatformLib.Lib -> Wallet.Api -> Aff (Map.Map String (Map.Map String BigInt.Argonaut.BigInt))
 walletBalance cardanoMultiplatformLib wallet = do
@@ -81,11 +78,8 @@ walletContext cardanoMultiplatformLib wallet = do
   pure $ do
     chAddr <- possibleAddress
     balance' <- do
-      traceM balance
       let
         eb = C.valueFromNestedMaps balance
-      traceM "Balance:"
-      traceM eb
       hush $ eb
     pure $ WalletContext
       { balance: balance'
