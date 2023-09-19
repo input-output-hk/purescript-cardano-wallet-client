@@ -61,7 +61,6 @@ import Data.Tuple.Nested (type (/\), (/\))
 import Data.Undefined.NoProblem (undefined)
 import Data.Variant (Variant)
 import Data.Variant as Variant
-import Debug (traceM)
 import Effect (Effect)
 import Effect.Aff (Aff, makeAff)
 import Effect.Class (liftEffect)

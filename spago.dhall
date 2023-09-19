@@ -4,7 +4,6 @@
   , "arrays"
   , "cardano-multiplatform-lib"
   , "control"
-  , "debug"
   , "effect"
   , "either"
   , "exceptions"

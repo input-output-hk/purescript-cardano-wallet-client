@@ -2,11 +2,11 @@ module WalletContext where
 
 import Prelude
 
+import Cardano as C
 import CardanoMultiplatformLib (Bech32, CborHex, addressObject, allocate, asksLib, runGarbageCollector, valueFromCbor)
 import CardanoMultiplatformLib as CardanoMultiplatformLib
 import CardanoMultiplatformLib.Transaction (TransactionUnspentOutputObject, ValueObject, transactionOutputObject, transactionUnspentOutput, transactionUnspentOutputObject)
 import CardanoMultiplatformLib.Types (Cbor, cborHexToCbor)
-import Contrib.Cardano as C
 import Data.Array as Array
 import Data.BigInt.Argonaut as BigInt.Argonaut
 import Data.Either (Either(..), fromRight, hush)

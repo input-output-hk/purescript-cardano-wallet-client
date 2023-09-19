@@ -224,4 +224,4 @@ in  upstream
         , "web-encoding"
         ]
         "https://github.com/input-output-hk/purescript-cardano-multiplatform-lib.git"
-        "main"
+        "v0.0.1"
