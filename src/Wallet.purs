@@ -37,6 +37,7 @@ module Wallet
   , signData
   , signTx
   , submitTx
+  , typhon
   , yoroi
   ) where
 
@@ -258,6 +259,7 @@ type Cardano = JSObject
   , gerowallet :: EffectProp (Nullable Wallet)
   , lace :: EffectProp (Nullable Wallet)
   , nami :: EffectProp (Nullable Wallet)
+  , typhoncip30 :: EffectProp (Nullable Wallet)
   , yoroi :: EffectProp (Nullable Wallet)
   )
 
@@ -266,6 +268,7 @@ _Cardano
      , gerowallet :: Cardano -> Effect (Nullable Wallet)
      , lace :: Cardano -> Effect (Nullable Wallet)
      , nami :: Cardano -> Effect (Nullable Wallet)
+     , typhoncip30 :: Cardano -> Effect (Nullable Wallet)
      , yoroi :: Cardano -> Effect (Nullable Wallet)
      }
 _Cardano = mkFFI (Proxy :: Proxy Cardano)
@@ -311,6 +314,9 @@ nami = map Nullable.toMaybe <<< _Cardano.nami
 -- | Not yet manually tested.
 yoroi :: Cardano -> Effect (Maybe Wallet)
 yoroi = map Nullable.toMaybe <<< _Cardano.yoroi
+
+typhon :: Cardano -> Effect (Maybe Wallet)
+typhon = map Nullable.toMaybe <<< _Cardano.typhoncip30
 
 -- | Manually tested and works with Nami.
 apiVersion :: Wallet -> Effect String
