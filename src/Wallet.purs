@@ -48,18 +48,18 @@ import CardanoMultiplatformLib as CardanoMultiplatformLib
 import CardanoMultiplatformLib.Transaction (BigNumObject, TransactionHashObject, TransactionObject, TransactionUnspentOutputObject, TransactionWitnessSetObject, ValueObject)
 import CardanoMultiplatformLib.Types (unsafeCborHex)
 import Control.Alt ((<|>))
-import Control.Monad.Except (runExcept, runExceptT)
-import Control.Monad.Except.Trans (except)
-import Data.Either (Either(..), either, hush, note)
+import Control.Monad.Except (runExcept, runExceptT, throwError)
+import Data.Either (Either(..), either, hush)
 import Data.Foldable (fold)
 import Data.List.NonEmpty (NonEmptyList(..))
 import Data.Maybe (Maybe(..), fromMaybe')
-import Data.NonEmpty (singleton)
+import Data.NonEmpty as NonEmpty
 import Data.Nullable (Nullable)
 import Data.Nullable as Nullable
 import Data.Traversable (for)
 import Data.Tuple.Nested (type (/\), (/\))
-import Data.Undefined.NoProblem (undefined)
+import Data.Undefined.NoProblem (Opt, undefined)
+import Data.Undefined.NoProblem as NoProblem
 import Data.Variant (Variant)
 import Data.Variant as Variant
 import Effect (Effect)
@@ -68,12 +68,11 @@ import Effect.Class (liftEffect)
 import Effect.Exception (throw)
 import Foreign (Foreign, ForeignError(..))
 import Foreign as Foreign
-import Foreign.Generic.Internal as Foreign.Generic
 import Foreign.Index as Foreign.Index
-import Foreign.Object (Object, lookup)
 import HexString as HexString
 import JS.Object (EffectMth0, EffectMth1, EffectMth2, EffectProp, JSObject)
 import JS.Object.Generic (mkFFI)
+import JS.Unsafe.Stringify (unsafeStringify)
 import Prim.TypeError (class Warn, Text)
 import Promise (Rejection, resolve, thenOrCatch) as Promise
 import Promise.Aff (Promise)
@@ -186,18 +185,26 @@ unknownError = Variant.inj (Proxy :: Proxy "unknownError")
 foreignErrors :: forall r. Foreign -> NonEmptyList ForeignError -> Variant (| ApiForeignErrors + r)
 foreignErrors value parsingErrors = Variant.inj (Proxy :: Proxy "foreignErrors") { value, parsingErrors }
 
-lookupForeign :: forall a. String -> Object a -> Either (NonEmptyList ForeignError) a
-lookupForeign str obj = note (NonEmptyList (singleton $ ForeignError $ "Missing " <> str)) $ lookup str obj
+-- lookupForeign :: forall a. String -> Object a -> Either (NonEmptyList ForeignError) a
+-- lookupForeign str obj = note (NonEmptyList (NonEmpty.singleton $ ForeignError $ "Missing " <> str)) $ lookup str obj
 
 readWalletError :: Foreign -> Either (NonEmptyList ForeignError) { info :: String, code :: Int }
 readWalletError rejection = runExcept do
-  obj <- Foreign.Generic.readObject rejection
-  info' <- except $ lookupForeign "info" obj
-  code' <- except $ lookupForeign "code" obj
+  let
+    toPossibleError :: Foreign -> { info :: Opt Foreign, code :: Opt Foreign }
+    toPossibleError = unsafeCoerce
+    possibleError = toPossibleError rejection
 
-  info <- Foreign.readString info'
-  code <- Foreign.readInt code'
-  pure { info, code }
+  case NoProblem.toMaybe possibleError.code, NoProblem.toMaybe possibleError.info of
+    Just foreignCode, Just foreignInfo -> do
+      info <- Foreign.readString foreignInfo
+      code <- Foreign.readInt foreignCode
+      pure { info, code }
+    _, _ -> throwError
+      $ NonEmptyList
+      $ NonEmpty.singleton
+      $ ForeignError
+      $ "Object doesn't have code and info props: " <> unsafeStringify rejection
 
 newtype Cbor :: forall k. k -> Type
 newtype Cbor a = Cbor String
